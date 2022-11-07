@@ -1,3 +1,4 @@
 PWD_HASH_SALT = b'unbreakable words'
 PWD_HASH_ITERATIONS = 100_000
+ALGO = 'HS256'
 ITEMS_PER_PAGE = 12

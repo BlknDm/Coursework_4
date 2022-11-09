@@ -1,14 +1,8 @@
-from contextlib import suppress
-
 from flask import Flask
 from flask_cors import CORS
-from flask_restx import Api, model
-from sqlalchemy.exc import IntegrityError
+from flask_restx import Api
 
 from config import Config
-from dao.model.director import Director
-from dao.model.genre import Genre
-from dao.model.movie import Movie
 from setup_db import db
 from views.auth import auth_ns
 from views.directors import director_ns

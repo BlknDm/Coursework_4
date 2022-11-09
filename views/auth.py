@@ -1,8 +1,8 @@
 from flask import request
 from flask_restx import Resource, Namespace, abort
 
-from implemented import auth_service
 from implemented import user_service
+from service.auth import generate_tokens, approve_refresh_token
 
 auth_ns = Namespace('auth')
 
@@ -32,7 +32,7 @@ class AuthLoginView(Resource):
         if not email and not password:
             abort(400)
 
-        token = auth_service.auth_user(email, password)
+        token = generate_tokens(email, password)
 
         if not token:
             return {"error": "Неверный логин или пароль"}
@@ -46,6 +46,6 @@ class AuthLoginView(Resource):
         if refresh_token is None:
             return {"error": "Токен просрочен"}, 400
 
-        tokens = user_service.check_refresh_token(refresh_token)
+        tokens = approve_refresh_token(refresh_token)
 
         return tokens, 201

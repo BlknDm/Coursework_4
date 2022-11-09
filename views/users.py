@@ -4,7 +4,7 @@ from flask_restx import Resource, Namespace
 from dao.model.user import UserSchema
 from decorators import auth_required
 from implemented import user_service
-from implemented import auth_service
+from service.auth import get_email_from_header, change_the_password
 
 user_ns = Namespace('users')
 
@@ -16,6 +16,7 @@ class UsersView(Resource):
         all_users = user_service.get_all()
         res = UserSchema(many=True).dump(all_users)
         return res, 200
+
 
 @user_ns.route('/<int:uid>')
 class UserView(Resource):
@@ -33,6 +34,7 @@ class UserView(Resource):
         user_service.update(req_json)
         return "", 204
 
+
 @user_ns.route('/password/')
 class UserPasswordView(Resource):
     @auth_required
@@ -40,6 +42,6 @@ class UserPasswordView(Resource):
         password_1 = request.json.get('password_1')
         password_2 = request.json.get('password_2')
         header = request.headers['Authorization']
-        email = auth_service.get_email_from_header(header)
+        email = get_email_from_header(header)
 
-        return auth_service.change_the_password(email, password_1, password_2)
+        return change_the_password(email, password_1, password_2)

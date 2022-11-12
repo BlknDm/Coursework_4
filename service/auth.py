@@ -10,7 +10,7 @@ from implemented import user_service
 from setup_db import db
 
 
-def generate_tokens(email, password):
+def generate_tokens(email, password, is_refresh=False):
     user = user_service.get_user_by_email(email)
 
     if user is None:

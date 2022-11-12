@@ -24,10 +24,9 @@ class UserDAO:
         self.session.delete(user)
         self.session.commit()
 
-    def update(self, user_data):
-        user = self.get_one(user_data.get("id"))
-        user.email = user_data.get("email")
-        user.password = user_data.get("password")
+    def patch(self, user_data):
+        user = self.get_one(user_data.get("email"))
+
         user.name = user_data.get("name")
         user.surname = user_data.get("surname")
         user.favourite_genre = user_data.get("favourite_genre")

@@ -25,18 +25,8 @@ class UserService:
     def delete(self, uid):
         self.dao.delete(uid)
 
-    def patch(self, data):
-        user = self.dao.get_one(data['id'])
-
-        if data.get('name'):
-            user.name = data['name']
-        if data.get('surname'):
-            user.surname = data['surname']
-        if data.get('favourite_genre'):
-            user.favourite_genre = data['favourite_genre']
-
-    def update_password(self, data):
-        pass
+    def patch(self, user_data):
+        self.dao.update(user_data)
 
     def get_hash(self, password):
         return hashlib.pbkdf2_hmac(

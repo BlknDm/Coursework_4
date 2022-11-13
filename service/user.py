@@ -1,3 +1,4 @@
+import base64
 import hashlib
 
 from constants import PWD_HASH_SALT, PWD_HASH_ITERATIONS
@@ -19,14 +20,14 @@ class UserService:
         return users
 
     def create(self, user_data):
-        user_data["password"] = self.get_hash(user_data["password"])
+        user_data["password"] = base64.b64encode(self.get_hash(user_data["password"]))
         return self.dao.create(user_data)
 
     def delete(self, uid):
         self.dao.delete(uid)
 
     def patch(self, user_data):
-        self.dao.update(user_data)
+        self.dao.patch(user_data)
 
     def get_hash(self, password):
         return hashlib.pbkdf2_hmac(
@@ -34,4 +35,4 @@ class UserService:
             password.encode('utf-8'),  # Convert the password to bytes
             PWD_HASH_SALT,
             PWD_HASH_ITERATIONS
-        ).decode("utf-8", "ignore")
+        )

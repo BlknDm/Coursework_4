@@ -55,4 +55,5 @@ class UserPasswordView(Resource):
         header = request.headers['Authorization']
         email = get_email_from_header(header)
 
-        return change_the_password(email, password_1, password_2)
+        change_the_password(email, password_1, password_2)
+        return "", 201

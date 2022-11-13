@@ -17,7 +17,7 @@ def generate_tokens(email, password, is_refresh=False):
         raise abort(404)
 
     data = {
-        'user_email': user.email
+        'email': user.email
     }
 
     min10 = datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
@@ -52,7 +52,7 @@ def approve_refresh_token(refresh_token):
     except Exception as e:
         return f'{e}', 401
 
-    email = data.get('user_email')
+    email = data.get('email')
 
     return generate_tokens(email, None, is_refresh=True)
 
@@ -62,7 +62,7 @@ def get_email_from_header(header: str):
     token = header.split('Bearer ')[-1]
     data_dict = jwt.decode(token, PWD_HASH_SALT, ALGO)
 
-    email = data_dict.get('user_email')
+    email = data_dict.get('email')
 
     return email
 

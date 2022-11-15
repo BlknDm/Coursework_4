@@ -7,9 +7,6 @@ class UserDAO:
     def __init__(self, session: db):
         self.session = session
 
-    def get_one(self, uid):
-        return self.session.query(User).get(uid)
-
     def get_all(self):
         return self.session.query(User).all()
 
@@ -25,7 +22,7 @@ class UserDAO:
         self.session.commit()
 
     def patch(self, user_data):
-        user = self.get_one(user_data.get("email"))
+        user = self.get_user_by_email(user_data.get("email"))
 
         user.name = user_data.get("name")
         user.surname = user_data.get("surname")

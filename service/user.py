@@ -9,9 +9,6 @@ class UserService:
     def __init__(self, dao: UserDAO):
         self.dao = dao
 
-    def get_one(self, uid):
-        return self.dao.get_one(uid)
-
     def get_user_by_email(self, email):
         return self.dao.get_user_by_email(email)
 
